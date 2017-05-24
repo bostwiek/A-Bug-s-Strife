@@ -14,8 +14,11 @@ public class mushroomBounce : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D col) {
 		{	
-			col.GetComponent<Rigidbody2D>().AddForce(new Vector2 (0, bounceHeight));
-			an.SetBool("bounce", true);
+			if (col.GetComponent<Rigidbody2D>())
+			{
+				col.GetComponent<Rigidbody2D>().AddForce(new Vector2 (0, bounceHeight));
+				an.SetBool("bounce", true);
+			}
 		}
 
 	}

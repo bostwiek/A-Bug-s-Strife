@@ -7,10 +7,12 @@ public class player : MonoBehaviour {
 	private Rigidbody2D rb;
 	private Animator an;
 	public Transform sightStart, sightEnd;
+	public Transform[] feet = new Transform[3];
+	public LayerMask ground;
 
-	public float movementSpeed, jumpForce, climbSpeed;
+	public float movementSpeed, jumpForce, climbSpeed, feetRadius;
 	public bool facingRight, onLadder;
-	private bool spotted;
+	private bool spotted, isGrounded;
 
 	// ladder stuff
 	private float climbVelocity, gravityStore;
@@ -29,7 +31,6 @@ public class player : MonoBehaviour {
 		float vertical = Input.GetAxis ("Vertical");
 
 		handleInput();
-
 		handleMovement(horizontal, vertical);
 
 	}
@@ -64,8 +65,18 @@ public class player : MonoBehaviour {
 			}
 		}
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			rb.AddForce(new Vector2(0, jumpForce));
-			// an.SetBool ("jump", true);
+
+			for (int x = 0; x < feet.Length; ++x)
+			{
+				isGrounded = Physics2D.OverlapCircle(feet[x].transform.position, feetRadius, ground);
+				if (isGrounded)
+				{
+					Debug.Log(isGrounded);
+					rb.AddForce(new Vector2(0, jumpForce));
+					// an.SetBool ("jump", true);
+					break;
+				}
+			}
 		}
 
 		// ladder stuff
