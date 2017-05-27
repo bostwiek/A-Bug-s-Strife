@@ -47,8 +47,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ant.cs" />
+     <Compile Include="Assets\Scripts\bloodSpawn.cs" />
      <Compile Include="Assets\Scripts\boxRange.cs" />
-     <Compile Include="Assets\Scripts\buttonPress.cs" />
+     <Compile Include="Assets\Scripts\button.cs" />
+     <Compile Include="Assets\Scripts\buttonDonger.cs" />
+     <Compile Include="Assets\Scripts\buttonDoor.cs" />
+     <Compile Include="Assets\Scripts\buttonExplode.cs" />
      <Compile Include="Assets\Scripts\cameraFollow.cs" />
      <Compile Include="Assets\Scripts\explosion.cs" />
      <Compile Include="Assets\Scripts\janitor.cs" />
@@ -63,6 +67,7 @@
      <Compile Include="Assets\Scripts\slug.cs" />
      <Compile Include="Assets\Scripts\snail.cs" />
      <Compile Include="Assets\Scripts\spider.cs" />
+     <Compile Include="Assets\Scripts\teleport.cs" />
      <Compile Include="Assets\Scripts\textMove.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

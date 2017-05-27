@@ -9,31 +9,44 @@ public class player : MonoBehaviour {
 	public Transform sightStart, sightEnd;
 	public Transform[] feet = new Transform[3];
 	public LayerMask ground;
+	public GameObject bloodSpawner;
+	private Vector3 spawn;
 
 	public float movementSpeed, jumpForce, climbSpeed, feetRadius;
-	public bool facingRight, onLadder;
+	public bool facingRight, onLadder, canControl;
 	private bool spotted, isGrounded;
 
 	// ladder stuff
 	private float climbVelocity, gravityStore;
 
 	void Start () {
+		spawn = transform.position;
 		facingRight = true;
 		rb = GetComponent<Rigidbody2D>();
 		an = GetComponent<Animator>();
 		spotted = false;
+		canControl = true;
 		gravityStore = rb.gravityScale;
 	}
 	
 	void FixedUpdate () {
+		if (canControl)
+		{
+			float horizontal = Input.GetAxis("Horizontal");
+			float vertical = Input.GetAxis("Vertical");
 
-		float horizontal = Input.GetAxis ("Horizontal");
-		float vertical = Input.GetAxis ("Vertical");
-
-		handleInput();
-		handleMovement(horizontal, vertical);
+			handleInput();
+			handleMovement(horizontal, vertical);
+		}
 
 	}
+
+	void OnCollisionEnter2D(Collision2D col) {
+		if (col.gameObject.name == "mine"){
+			StartCoroutine(playerDies());
+		}
+	}
+
 
 	private void Flip(float horizontal) {
 
@@ -55,15 +68,7 @@ public class player : MonoBehaviour {
 	}
 
 	private void handleInput() {
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			// check sightStart to sightEnd to see if any NPCs are in range
-			lookAhead();
-			if (spotted == true)
-			{
-				Debug.Log("NPC Spotted!");
-			}
-		}
+		
 		if (Input.GetKeyDown(KeyCode.Space)) {
 
 			for (int x = 0; x < feet.Length; ++x)
@@ -71,7 +76,6 @@ public class player : MonoBehaviour {
 				isGrounded = Physics2D.OverlapCircle(feet[x].transform.position, feetRadius, ground);
 				if (isGrounded)
 				{
-					Debug.Log(isGrounded);
 					rb.AddForce(new Vector2(0, jumpForce));
 					// an.SetBool ("jump", true);
 					break;
@@ -93,5 +97,19 @@ public class player : MonoBehaviour {
 
 	private void lookAhead() {
 		spotted = Physics2D.Linecast (sightStart.position, sightEnd.position, 1 << LayerMask.NameToLayer("NPC"));
+	}
+
+	IEnumerator playerDies() {
+
+		an.SetBool("dead", true);
+		canControl = false;
+		bloodSpawner.GetComponent<bloodSpawn>().spawnBlood();
+		yield return new WaitForSeconds(2.0f);
+
+		an.SetBool("dead", false);
+		transform.position = spawn;
+		transform.rotation = Quaternion.identity;
+		canControl = true;
+
 	}
 }

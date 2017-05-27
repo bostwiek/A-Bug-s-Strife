@@ -9,7 +9,7 @@ public class mantis : MonoBehaviour {
 
 	public float mantisSpeed, timeToTravel, maxSpeed, absSpeed;
 
-	private bool facingRight;
+	private bool facingRight, attacking;
 	private int turnAround, slacking;
 
 	void Start () {
@@ -19,6 +19,7 @@ public class mantis : MonoBehaviour {
 		slacking = 0;
 		timeToTravel = 0;
 		maxSpeed = 10f;
+		attacking = false;
 	}
 	
 	void FixedUpdate () {
@@ -65,6 +66,10 @@ public class mantis : MonoBehaviour {
 
 		absSpeed = Mathf.Abs(mantisSpeed);
 		an.SetFloat("speed", absSpeed);
+
+		// if mantis sees snail
+
+		// start attack coroutine
 
 	}
 
