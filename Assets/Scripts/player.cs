@@ -68,7 +68,6 @@ public class player : MonoBehaviour {
 	}
 
 	private void handleInput() {
-		
 		if (Input.GetKeyDown(KeyCode.Space)) {
 
 			for (int x = 0; x < feet.Length; ++x)

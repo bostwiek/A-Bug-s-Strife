@@ -5,13 +5,14 @@ using UnityEngine;
 public class bloodSpawn : MonoBehaviour {
 
 	public GameObject bloodPrefab;
-	private Transform bloodSpawner;
+	public GameObject[] Clone;
+	public Transform bloodSpawner;
 	public player player;
 	public float projectileSpeedX, projectileSpeedY, bloodExpiration;
 	public bool playerDead;
 
-	private float bloodTime, speedX, speedY;
-	private int bloodCount;
+	public float bloodTime, speedX, speedY;
+	public int bloodCount;
 
 	void Start () {
 		bloodSpawner = GetComponent<Transform>();
@@ -23,24 +24,20 @@ public class bloodSpawn : MonoBehaviour {
 
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
-			spawnBlood();
+			spawnBlood2();
 		}
 
 	}
 
 	public void spawnBlood() {
 
-		GameObject Clone, Clone2, Clone3, Clone4, Clone5, Clone6, Clone7, Clone8, Clone9;
+		GameObject Clone, Clone2, Clone3, Clone4, Clone5;
 
 		Clone = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
 		Clone2 = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
 		Clone3 = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
 		Clone4 = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
 		Clone5 = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
-		Clone6 = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
-		Clone7 = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
-		Clone8 = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
-		Clone9 = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
 
 		speedX = 1f;
 
@@ -49,13 +46,20 @@ public class bloodSpawn : MonoBehaviour {
 		Clone3.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (Random.Range(-20, 20), Random.Range(0, 40)), ForceMode2D.Impulse);
 		Clone4.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (Random.Range(-20, 20), Random.Range(0, 40)), ForceMode2D.Impulse);
 		Clone5.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (Random.Range(-20, 20), Random.Range(0, 40)), ForceMode2D.Impulse);
-		Clone6.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (Random.Range(-20, 20), Random.Range(0, 40)), ForceMode2D.Impulse);
-		Clone7.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (Random.Range(-20, 20), Random.Range(0, 40)), ForceMode2D.Impulse);
-		Clone8.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (Random.Range(-20, 20), Random.Range(0, 40)), ForceMode2D.Impulse);
-		Clone9.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (Random.Range(-20, 20), Random.Range(0, 40)), ForceMode2D.Impulse);
 
 		GameObject.Destroy(Clone, 12.0f);
 	
 	}
 
+	public void spawnBlood2() {
+		
+		int loops = 7;
+
+		for (int i = 0; i < loops; i++) {
+			GameObject clone = (Instantiate(bloodPrefab, bloodSpawner.transform.position, bloodSpawner.transform.rotation)) as GameObject;
+			Clone [i] = clone;
+			clone.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (Random.Range(-20, 20), Random.Range(0, 40)), ForceMode2D.Impulse);
+		}
+
+	}
 }
